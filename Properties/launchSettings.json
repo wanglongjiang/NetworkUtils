@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NetworkUtils": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
