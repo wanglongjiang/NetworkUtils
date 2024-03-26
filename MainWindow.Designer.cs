@@ -48,6 +48,7 @@ namespace NetworkUtils
             panel5 = new Panel();
             richTextBoxDbOut = new RichTextBox();
             panel4 = new Panel();
+            buttonTelnetOnShell = new Button();
             label1 = new Label();
             textBoxDBPort = new TextBox();
             groupBoxDBType = new GroupBox();
@@ -60,6 +61,12 @@ namespace NetworkUtils
             rbMysql = new RadioButton();
             buttonDBTelnet = new Button();
             textBoxDBAddr = new TextBox();
+            tabPageTraceroute = new TabPage();
+            panel6 = new Panel();
+            richTextBoxTracerouteOut = new RichTextBox();
+            panel3 = new Panel();
+            buttonTraceroute = new Button();
+            textBoxTracerouteAddr = new TextBox();
             menuStrip1 = new MenuStrip();
             FileToolStripMenuItem = new ToolStripMenuItem();
             StopToolStripMenuItem = new ToolStripMenuItem();
@@ -68,7 +75,6 @@ namespace NetworkUtils
             AboutToolStripMenuItem = new ToolStripMenuItem();
             panelStatus = new Panel();
             labelStatus = new Label();
-            buttonTelnetOnShell = new Button();
             tabControl1.SuspendLayout();
             tabPagePing.SuspendLayout();
             panel2.SuspendLayout();
@@ -77,6 +83,9 @@ namespace NetworkUtils
             panel5.SuspendLayout();
             panel4.SuspendLayout();
             groupBoxDBType.SuspendLayout();
+            tabPageTraceroute.SuspendLayout();
+            panel6.SuspendLayout();
+            panel3.SuspendLayout();
             menuStrip1.SuspendLayout();
             panelStatus.SuspendLayout();
             SuspendLayout();
@@ -85,6 +94,7 @@ namespace NetworkUtils
             // 
             tabControl1.Controls.Add(tabPagePing);
             tabControl1.Controls.Add(tabPageDatabase);
+            tabControl1.Controls.Add(tabPageTraceroute);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 25);
             tabControl1.Name = "tabControl1";
@@ -232,6 +242,17 @@ namespace NetworkUtils
             panel4.Size = new Size(994, 108);
             panel4.TabIndex = 0;
             // 
+            // buttonTelnetOnShell
+            // 
+            buttonTelnetOnShell.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            buttonTelnetOnShell.Location = new Point(646, 3);
+            buttonTelnetOnShell.Name = "buttonTelnetOnShell";
+            buttonTelnetOnShell.Size = new Size(158, 34);
+            buttonTelnetOnShell.TabIndex = 6;
+            buttonTelnetOnShell.Text = "系统Telnet";
+            buttonTelnetOnShell.UseVisualStyleBackColor = true;
+            buttonTelnetOnShell.Click += buttonTelnetOnShell_Click;
+            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -372,6 +393,70 @@ namespace NetworkUtils
             textBoxDBAddr.TabIndex = 1;
             textBoxDBAddr.Text = "localhost";
             // 
+            // tabPageTraceroute
+            // 
+            tabPageTraceroute.Controls.Add(panel6);
+            tabPageTraceroute.Controls.Add(panel3);
+            tabPageTraceroute.Location = new Point(4, 26);
+            tabPageTraceroute.Name = "tabPageTraceroute";
+            tabPageTraceroute.Padding = new Padding(3);
+            tabPageTraceroute.Size = new Size(1000, 506);
+            tabPageTraceroute.TabIndex = 2;
+            tabPageTraceroute.Text = "Traceroute";
+            tabPageTraceroute.UseVisualStyleBackColor = true;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(richTextBoxTracerouteOut);
+            panel6.Dock = DockStyle.Fill;
+            panel6.Location = new Point(3, 44);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(994, 459);
+            panel6.TabIndex = 1;
+            // 
+            // richTextBoxTracerouteOut
+            // 
+            richTextBoxTracerouteOut.BackColor = Color.Black;
+            richTextBoxTracerouteOut.Dock = DockStyle.Fill;
+            richTextBoxTracerouteOut.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            richTextBoxTracerouteOut.ForeColor = Color.White;
+            richTextBoxTracerouteOut.Location = new Point(0, 0);
+            richTextBoxTracerouteOut.Name = "richTextBoxTracerouteOut";
+            richTextBoxTracerouteOut.ReadOnly = true;
+            richTextBoxTracerouteOut.Size = new Size(994, 459);
+            richTextBoxTracerouteOut.TabIndex = 6;
+            richTextBoxTracerouteOut.Text = "";
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(buttonTraceroute);
+            panel3.Controls.Add(textBoxTracerouteAddr);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(3, 3);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(994, 41);
+            panel3.TabIndex = 0;
+            // 
+            // buttonTraceroute
+            // 
+            buttonTraceroute.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            buttonTraceroute.Location = new Point(370, 3);
+            buttonTraceroute.Name = "buttonTraceroute";
+            buttonTraceroute.Size = new Size(158, 34);
+            buttonTraceroute.TabIndex = 3;
+            buttonTraceroute.Text = "跟踪";
+            buttonTraceroute.UseVisualStyleBackColor = true;
+            buttonTraceroute.Click += buttonTraceroute_Click;
+            // 
+            // textBoxTracerouteAddr
+            // 
+            textBoxTracerouteAddr.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            textBoxTracerouteAddr.Location = new Point(5, 3);
+            textBoxTracerouteAddr.Name = "textBoxTracerouteAddr";
+            textBoxTracerouteAddr.Size = new Size(359, 32);
+            textBoxTracerouteAddr.TabIndex = 2;
+            textBoxTracerouteAddr.Text = "localhost";
+            // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
@@ -435,17 +520,6 @@ namespace NetworkUtils
             labelStatus.TabIndex = 0;
             labelStatus.Text = "就绪";
             // 
-            // buttonTelnetOnShell
-            // 
-            buttonTelnetOnShell.Font = new Font("Microsoft YaHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            buttonTelnetOnShell.Location = new Point(646, 3);
-            buttonTelnetOnShell.Name = "buttonTelnetOnShell";
-            buttonTelnetOnShell.Size = new Size(158, 34);
-            buttonTelnetOnShell.TabIndex = 6;
-            buttonTelnetOnShell.Text = "系统Telnet";
-            buttonTelnetOnShell.UseVisualStyleBackColor = true;
-            buttonTelnetOnShell.Click += buttonTelnetOnShell_Click;
-            // 
             // NetworkUtils
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -468,6 +542,10 @@ namespace NetworkUtils
             panel4.PerformLayout();
             groupBoxDBType.ResumeLayout(false);
             groupBoxDBType.PerformLayout();
+            tabPageTraceroute.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             panelStatus.ResumeLayout(false);
@@ -598,5 +676,11 @@ namespace NetworkUtils
         private RadioButton rbSSH;
         private Button buttonPingInShell;
         private Button buttonTelnetOnShell;
+        private TabPage tabPageTraceroute;
+        private Panel panel6;
+        private RichTextBox richTextBoxTracerouteOut;
+        private Panel panel3;
+        private Button buttonTraceroute;
+        private TextBox textBoxTracerouteAddr;
     }
 }

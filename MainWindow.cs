@@ -251,5 +251,54 @@ namespace NetworkUtils
                 process.WaitForExit();
             }
         }
+
+        private void buttonTraceroute_Click(object sender, EventArgs e)
+        {
+            // 异步执行traceroute textboxTracerouteAddr.Text 中的地址 并输出到 richTextBoxTracerouteOut
+            // 不打开cmd窗口，输出到 richTextBoxTracerouteOut
+            // 使用异步方式执行，tracert的输出每行都实时输出到 richTextBoxTracerouteOut
+            // 可以在跟踪过程中点击本按钮停止跟踪
+
+            if (buttonTraceroute.Text == "停止")
+            {
+                stopCommand = true;
+                return;
+            }
+            buttonTraceroute.Text = "停止";
+            buttonTraceroute.ForeColor = Color.Red;
+            richTextBoxTracerouteOut.Clear();
+            Task.Run(() =>
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = "tracert";
+                startInfo.Arguments = textBoxTracerouteAddr.Text;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.UseShellExecute = false;
+                startInfo.CreateNoWindow = true;
+
+                using (Process process = Process.Start(startInfo))
+                {
+                    while (!process.StandardOutput.EndOfStream)
+                    {
+                        string line = process.StandardOutput.ReadLine();
+                        if (stopCommand)
+                        {
+                            process.Kill();
+                            break;
+                        }
+                        richTextBoxTracerouteOut.Invoke(new Action(() =>
+                        {
+                            richTextBoxTracerouteOut.AppendText(line + "\r\n");
+                            richTextBoxTracerouteOut.ScrollToCaret();
+                        }));
+                    }
+                }
+                buttonTraceroute.Invoke(new Action(() =>
+                {
+                    buttonTraceroute.Text = "跟踪";
+                    buttonTraceroute.ForeColor = Color.Black;
+                }));
+            });
+        }
     }
 }
