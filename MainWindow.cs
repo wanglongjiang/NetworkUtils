@@ -267,7 +267,7 @@ namespace NetworkUtils
             buttonTraceroute.Text = "ֹͣ";
             buttonTraceroute.ForeColor = Color.Red;
             richTextBoxTracerouteOut.Clear();
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.FileName = "tracert";
