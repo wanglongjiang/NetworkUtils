@@ -168,6 +168,7 @@ namespace NetworkUtils
             textBoxPingAddr.Size = new Size(359, 32);
             textBoxPingAddr.TabIndex = 0;
             textBoxPingAddr.Text = "www.baidu.com";
+            textBoxPingAddr.TextChanged += textBoxPingAddr_TextChanged;
             textBoxPingAddr.Enter += textBoxPingAddr_Enter;
             textBoxPingAddr.KeyUp += textBoxPingAddr_KeyUp;
             // 
@@ -392,6 +393,7 @@ namespace NetworkUtils
             textBoxDBAddr.Size = new Size(359, 32);
             textBoxDBAddr.TabIndex = 1;
             textBoxDBAddr.Text = "localhost";
+            textBoxDBAddr.TextChanged += textBoxDBAddr_TextChanged;
             // 
             // tabPageTraceroute
             // 
@@ -456,6 +458,7 @@ namespace NetworkUtils
             textBoxTracerouteAddr.Size = new Size(359, 32);
             textBoxTracerouteAddr.TabIndex = 2;
             textBoxTracerouteAddr.Text = "localhost";
+            textBoxTracerouteAddr.TextChanged += textBoxTracerouteAddr_TextChanged;
             // 
             // menuStrip1
             // 
@@ -560,9 +563,10 @@ namespace NetworkUtils
             {
                 if (textBoxPingAddr.Text == "")
                 {
-                    MessageBox.Show("必须输入服务器地址","错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show("必须输入服务器地址", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                textBoxPingAddr.Text = removeHttpFix(textBoxPingAddr.Text);
                 buttonPing.Text = "Stop";
                 buttonPing.ForeColor = Color.Red;
                 remainderPingTimes = 5;
@@ -605,7 +609,7 @@ namespace NetworkUtils
                                 string loseCount = matchs[0].Groups[1].Value;
                                 if (int.Parse(loseCount) > 0)
                                 {
-                                    richTextBoxPingOut.SelectionStart = startIndex+matchs[0].Groups[0].Index;
+                                    richTextBoxPingOut.SelectionStart = startIndex + matchs[0].Groups[0].Index;
                                     richTextBoxPingOut.SelectionLength = matchs[0].Groups[0].Length;
                                     richTextBoxPingOut.SelectionColor = Color.Red;
                                     richTextBoxPingOut.SelectionStart = richTextBoxPingOut.TextLength;

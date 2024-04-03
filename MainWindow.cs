@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NetworkUtils
 {
@@ -299,6 +300,92 @@ namespace NetworkUtils
                     buttonTraceroute.ForeColor = Color.Black;
                 }));
             });
+        }
+
+        private void textBoxPingAddr_TextChanged(object sender, EventArgs e)
+        {
+            textBoxPingAddr.Text = removeHttpFix(textBoxPingAddr.Text);
+        }
+
+        private static string removeHttpFix(string text)
+        {
+            // 去掉换行符
+            text = text.Replace("\r", "").Replace("\n", "");
+            // 去掉http://和https://
+            text = text.Replace("http://", "").Replace("https://", "");
+            // 去掉空格
+            text = text.Replace(" ", "");
+            // 去掉/后面的内容
+            int index = text.IndexOf('/');
+            if (index > 0)
+            {
+                text = text.Substring(0, index);
+            }
+            // 去掉:后面的内容
+            index = text.IndexOf(':');
+            if (index > 0)
+            {
+                text = text.Substring(0, index);
+            }
+
+            return text;
+        }
+
+        private void textBoxTracerouteAddr_TextChanged(object sender, EventArgs e)
+        {
+            textBoxTracerouteAddr.Text = removeHttpFix(textBoxTracerouteAddr.Text);
+        }
+
+        private void textBoxDBAddr_TextChanged(object sender, EventArgs e)
+        {
+            // 如果textBoxDbAddr以http://开头，说明是web服务
+            // 需要将textBoxDbAddr中的http://去掉，路径中的/后面的部分去掉，如果有端口号，需要将端口号赋值给textBoxDBPort
+            if (textBoxDBAddr.Text.StartsWith("http://"))
+            {
+                textBoxDBAddr.Text = textBoxDBAddr.Text.Replace("http://", "");
+                // 去掉/后面的内容
+                int index = textBoxDBAddr.Text.IndexOf('/');
+                if (index > 0)
+                {
+                    textBoxDBAddr.Text = textBoxDBAddr.Text.Substring(0, index);
+                }
+                // 设置端口
+                index = textBoxDBAddr.Text.IndexOf(':');
+                if (index > 0)
+                {
+                    textBoxDBPort.Text = textBoxDBAddr.Text.Substring(index);
+                    textBoxDBAddr.Text = textBoxDBAddr.Text.Substring(0, index);
+                }
+                else
+                {
+                    textBoxDBPort.Text = "80";
+                }
+                rbWeb.Checked = true;
+            }
+            // 如果textBoxDbAddr以https://开头，说明是web服务
+            // 需要将textBoxDbAddr中的https://去掉，路径中的/后面的部分去掉，如果有端口号，需要将端口号赋值给textBoxDBPort
+            if (textBoxDBAddr.Text.StartsWith("https://"))
+            {
+                textBoxDBAddr.Text = textBoxDBAddr.Text.Replace("https://", "");
+                // 去掉/后面的内容
+                int index = textBoxDBAddr.Text.IndexOf('/');
+                if (index > 0)
+                {
+                    textBoxDBAddr.Text = textBoxDBAddr.Text.Substring(0, index);
+                }
+                // 设置端口
+                index = textBoxDBAddr.Text.IndexOf(':');
+                if (index > 0)
+                {
+                    textBoxDBPort.Text = textBoxDBAddr.Text.Substring(index);
+                    textBoxDBAddr.Text = textBoxDBAddr.Text.Substring(0, index);
+                }
+                else
+                {
+                    textBoxDBPort.Text = "443";
+                }
+                rbWeb.Checked = true;
+            }
         }
     }
 }
